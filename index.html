@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta>
+    <title> colorful_pattern </title>
+    <style>
+      body {
+        background: lightyellow;
+      }
+      div {
+        position: absolute;
+      }
+	 </style>
+  </head>
+
+   <body id="the body" onload="animate(); sound();" > <!-- http-equiv="refresh" content="0.1" -->
+        <script>
+			function sound(){var audio = new Audio("trucks020.mp3");
+				audio.play();};
+			
+          
+			
+
+			var A = -1000;
+			var body = document.getElementById("the body");
+
+			function randColor() {
+				var random_colors = Math.random() * 255;
+				random_colors = Math.floor(random_colors);
+				var color_list = [random_colors, random_colors, random_colors];
+				return color_list;
+			};
+			
+			function show_pattern (){
+				
+				var left_position = A;
+				var top_position = 75;
+				var width = 600;
+				var height = 600;
+					
+				
+				var Div = function(left_position,top_position,width,height,borderRadius){
+					this.left_position = left_position;
+					this.top_position  = top_position;
+					this.width = width;
+					this.height = height;
+					this.borderRadius = borderRadius;
+				};
+
+				while (width > 0) {
+					
+					Div.prototype.drawPart = function(){
+					var part = document.createElement("div");
+					part.style.left = this.left_position + "px";
+					part.style.top = this.top_position + "px";
+					part.style.width = this.width + "px";
+					part.style.height = this.height + "px";
+					part.style.borderRadius = this.borderRadius;
+					part.style.background = "rgb(" + randColor()[0] + " , " + randColor()[1] + "," + randColor()[2] + ")";
+					body.appendChild(part);
+					};
+					
+					var box = new Div (left_position - 130,top_position,width + 200,height - 200,"30" + "%" + "0" + "%" + "10" + "%" + "0" + "%");
+					var front = new Div(left_position + 550,top_position + 100,width - 300,height - 300,"0" + "%" + "40" + "%" + "8" + "%" + "10" + "%");
+					var front_wheel = new Div(left_position + 500,top_position + 300,width - 400,height - 400,100 +"%");
+					var back_wheel = new Div(left_position,top_position + 300,width - 400,height - 400,100 +"%");
+				
+				box.drawPart();
+				front.drawPart();
+				front_wheel.drawPart();
+				back_wheel.drawPart();
+				
+				top_position += 10;
+				left_position += 10;
+				width -= 20;
+				height -= 20;
+				}
+			};
+              
+			function animate() {
+				A += 10;
+				if (A > 1500) {
+				  A = -1000;sound();
+				}
+				while (body.hasChildNodes()){
+					body.removeChild(body.firstChild);
+				}
+				window.requestAnimationFrame(function(){animate();show_pattern()});
+			};
+
+		</script>
+	</body>
+
+</html>
